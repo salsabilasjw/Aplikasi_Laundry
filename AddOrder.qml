@@ -5,7 +5,8 @@ import QtQuick.Layouts
 Item {
     Column {
         anchors.fill: parent
-        spacing: 24
+        anchors.margins: 20
+        spacing: 12
 
         // Header
         Column {
@@ -29,16 +30,19 @@ Item {
         // Form Card
         Rectangle {
             width: Math.min(650, parent.width)
-            height: 550
+            implicitHeight: formContentColumn.implicitHeight + 40
             color: "#FFFFFF"
             radius: 16
             border.color: "#E3F2FD"
             border.width: 1
 
             Column {
-                anchors.fill: parent
-                anchors.margins: 32
-                spacing: 24
+                    id: formContentColumn
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.margins: 20
+                    spacing: 14
 
                 // Customer Name
                 Column {
@@ -48,13 +52,14 @@ Item {
                     Text {
                         text: "Customer Name"
                         font.pixelSize: 13
+                        font.bold: true
                         color: "#424242"
                     }
 
                     TextField {
                         id: customerNameField
                         width: parent.width
-                        height: 50
+                        height: 40
                         placeholderText: "Enter customer name"
                         font.pixelSize: 14
 
@@ -82,7 +87,7 @@ Item {
                     TextField {
                         id: weightField
                         width: parent.width
-                        height: 50
+                        height: 40
                         placeholderText: "Enter weight in kg"
                         font.pixelSize: 14
                         validator: DoubleValidator { bottom: 0; decimals: 1 }
@@ -111,7 +116,7 @@ Item {
                     ComboBox {
                         id: serviceTypeCombo
                         width: parent.width
-                        height: 50
+                        height: 40
                         model: ["Regular - Rp 10.000/kg", "Express - Rp 15.000/kg"]
                         font.pixelSize: 14
 
@@ -126,58 +131,56 @@ Item {
 
                 // Price Estimate
                 Rectangle {
+                    id: priceEstimateBox
                     width: parent.width
-                    height: 85
+                    height: 72
                     color: "#E3F2FD"
-                    radius: 12
                     border.color: "#90CAF9"
                     border.width: 1
-                    visible: weightField.text !== ""
+                    radius: 12
 
                     Column {
-                        anchors.fill: parent
-                        anchors.margins: 16
-                        spacing: 6
+                        id: leftTextColumn
+                        anchors.left: parent.left
+                        anchors.leftMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 4
 
-                        Row {
-                            width: parent.width
-
-                            Text {
-                                text: "Estimated Total Price:"
-                                font.pixelSize: 13
-                                color: "#0D47A1"
-                            }
-
-                            Item { width: parent.width - 350 }
-
-                            Text {
-                                text: {
-                                    var weight = parseFloat(weightField.text) || 0;
-                                    var pricePerKg = serviceTypeCombo.currentIndex === 0 ? 10000 : 15000;
-                                    return orderManager.formatRupiah(weight * pricePerKg);
-                                }
-                                font.pixelSize: 24
-                                font.bold: true
-                                color: "#1565C0"
-                            }
+                        Text {
+                            text: "Estimated Total Price:"
+                            font.pixelSize: 12
+                            font.bold: true
+                            color: "#1E88E5"
                         }
 
                         Text {
-                            text: {
-                                var weight = weightField.text || "0";
-                                var pricePerKg = serviceTypeCombo.currentIndex === 0 ? 10000 : 15000;
-                                return weight + " kg × " + orderManager.formatRupiah(pricePerKg) + "/kg";
-                            }
+                            text: (weightField.text ? weightField.text : "0") + " kg × " +
+                                  (serviceTypeCombo.currentIndex === 0 ? "Rp 10.000/kg" : "Rp 15.000/kg")
                             font.pixelSize: 11
-                            color: "#1976D2"
+                            color: "#616161"
                         }
+                    }
+
+                    Text {
+                        property real pricePerKg: serviceTypeCombo.currentIndex === 0 ? 10000 : 15000
+                        property real totalPrice: (parseFloat(weightField.text) ? parseFloat(weightField.text) : 0) * pricePerKg
+
+                        text: "Rp " + totalPrice.toLocaleString(Qt.locale("id_ID"), "f", 0)
+
+                        font.pixelSize: 20
+                        font.bold: true
+                        color: "#1976D2"
+
+                        anchors.right: parent.right
+                        anchors.rightMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                 }
 
                 // Submit Button
                 Button {
                     width: parent.width
-                    height: 55
+                    height: 44
                     text: "Add Order"
                     font.pixelSize: 16
                     font.bold: true
