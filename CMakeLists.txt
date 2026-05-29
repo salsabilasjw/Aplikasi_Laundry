@@ -10,10 +10,10 @@ set(CMAKE_AUTORCC ON)
 
 # Find Qt6
 find_package(Qt6 6.2 REQUIRED COMPONENTS
-    Core
-    Quick
-    Qml
-)
+        Core
+        Quick
+        Qml
+    )
 
 # Source files (CHANGED TARGET NAME TO appBubblyWash HERE)
 qt_add_executable(BubblyWash
@@ -38,9 +38,7 @@ qt_add_qml_module(BubblyWash
         fonts/Poppins-Medium.ttf
         fonts/Poppins-SemiBold.ttf
         fonts/Poppins-Bold.ttf
-        RESOURCES fonts/resources.qrc
-        RESOURCES source.qrc
-        RESOURCES source.qrc
+        images/logo.png
 )
 
 # Link libraries

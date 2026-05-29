@@ -176,52 +176,57 @@ Item {
     }
 
     component StatCard: Rectangle {
-        property string title: ""
-        property string value: ""
-        property color bgColor: "#E3F2FD"
-        property color iconColor: "#1976D2"
-        property string iconText: ""
+            id: card
+            property string title: ""
+            property string value: ""
+            property color bgColor: "#E3F2FD"
+            property color iconColor: "#1976D2"
+            property string iconText: ""
 
-        height: 130
-        color: bgColor
-        radius: 16
-        border.color: Qt.darker(bgColor, 1.1)
-        border.width: 1
-
-        Column {
-            anchors.fill: parent
-            anchors.margins: 20
-            spacing: 16
-
-            Rectangle {
-                width: 56
-                height: 56
-                radius: 12
-                color: Qt.lighter(parent.parent.bgColor, 1.2)
-
-                Text {
-                    anchors.centerIn: parent
-                    text: parent.parent.parent.parent.iconText
-                    font.pixelSize: 28
-                }
-            }
+            height: 140
+            color: card.bgColor
+            radius: 16
+            border.color: Qt.darker(card.bgColor, 1.05)
+            border.width: 1
 
             Column {
-                spacing: 4
+                anchors.fill: parent
+                anchors.margins: 16
+                spacing: 12
 
-                Text {
-                    text: parent.parent.parent.parent.title
-                    font.pixelSize: 13
-                    color: "#616161"
+                Rectangle {
+                    width: 44
+                    height: 44
+                    radius: 10
+                    color: "#FFFFFF"
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: card.iconText
+                        font.pixelSize: 22
+                    }
                 }
 
-                Text {
-                    text: parent.parent.parent.parent.value
-                    font.pixelSize: 30
-                    font.bold: true
-                    color: parent.parent.parent.parent.parent.iconColor
+                Column {
+                    width: parent.width
+                    spacing: 4
+
+                    Text {
+                        text: card.title
+                        font.family: "Poppins"
+                        font.pixelSize: 14
+                        color: "#616161"
+                    }
+
+                    Text {
+                        text: card.value
+                        font.family: "Poppins"
+                        font.pixelSize: 28
+                        font.bold: true
+                        color: card.iconColor
+                    }
                 }
             }
         }
     }
-}
+

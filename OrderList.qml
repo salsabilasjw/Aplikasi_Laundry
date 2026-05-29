@@ -7,7 +7,8 @@ Item {
 
     Column {
         anchors.fill: parent
-        spacing: 24
+        anchors.margins: 16
+        spacing: 12
 
         // Header
         Column {
@@ -55,13 +56,13 @@ Item {
                         anchors.rightMargin: 24
                         spacing: 12
 
-                        HeaderText { text: "Order ID"; width: 90 }
-                        HeaderText { text: "Customer Name"; width: 160 }
-                        HeaderText { text: "Service Type"; width: 130 }
-                        HeaderText { text: "Weight (kg)"; width: 110 }
-                        HeaderText { text: "Total Price"; width: 130 }
-                        HeaderText { text: "Status"; width: 130 }
-                        HeaderText { text: "Actions"; width: 200 }
+                        HeaderText { text: "Order ID"; width: 75 }
+                        HeaderText { text: "Customer Name"; width: 140 }
+                        HeaderText { text: "Service Type"; width: 120 }
+                        HeaderText { text: "Weight (kg)"; width: 100 }
+                        HeaderText { text: "Total Price"; width: 120 }
+                        HeaderText { text: "Status"; width: 120 }
+                        HeaderText { text: "Actions"; width: 160 }
                     }
                 }
 
@@ -87,7 +88,7 @@ Item {
 
                             // Order ID
                             Text {
-                                width: 90
+                                width: 75
                                 text: "#" + modelData.id
                                 font.pixelSize: 13
                                 font.bold: true
@@ -99,7 +100,7 @@ Item {
 
                             // Customer Name
                             Text {
-                                width: 160
+                                width: 140
                                 text: modelData.customerName
                                 font.pixelSize: 13
                                 color: "#212121"
@@ -110,7 +111,7 @@ Item {
 
                             // Service Type
                             Row {
-                                width: 130
+                                width: 120
                                 height: parent.height
                                 spacing: 10
 
@@ -132,7 +133,7 @@ Item {
 
                             // Weight
                             Text {
-                                width: 110
+                                width: 100
                                 text: modelData.weight + " kg"
                                 font.pixelSize: 13
                                 color: "#424242"
@@ -142,7 +143,7 @@ Item {
 
                             // Total Price
                             Text {
-                                width: 130
+                                width: 120
                                 text: orderManager.formatRupiah(modelData.totalPrice)
                                 font.pixelSize: 13
                                 font.bold: true
@@ -152,33 +153,39 @@ Item {
                             }
 
                             // Status
-                            Rectangle {
-                                width: 130
-                                height: 32
-                                anchors.verticalCenter: parent.verticalCenter
-                                color: modelData.status === "Processing" ? "#FFF9C4" : "#C8E6C9"
-                                border.color: modelData.status === "Processing" ? "#FFD54F" : "#A5D6A7"
-                                border.width: 1
-                                radius: 16
+                            Item {
+                                width: 120
+                                height: parent.height
 
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: modelData.status
-                                    font.pixelSize: 12
-                                    font.bold: true
-                                    color: modelData.status === "Processing" ? "#F57C00" : "#388E3C"
+                                Rectangle {
+                                    width: modelData.status === "Processing" ? 95 : 80
+                                    height: 28
+                                    anchors.centerIn: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    color: modelData.status === "Processing" ? "#FFF9C4" : "#C8E6C9"
+                                    border.color: modelData.status === "Processing" ? "#FFD54F" : "#A5D6A7"
+                                    border.width: 1
+                                    radius: 14
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: modelData.status
+                                        font.pixelSize: 11
+                                        font.bold: true
+                                        color: modelData.status === "Processing" ? "#F57C00" : "#388E3C"
+                                    }
                                 }
                             }
 
                             // Actions
                             Row {
-                                width: 200
+                                width: 140
                                 height: parent.height
                                 spacing: 10
 
                                 Button {
-                                    width: 75
-                                    height: 38
+                                    width: 65
+                                    height: 34
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: "Struk"
                                     font.pixelSize: 12
@@ -206,11 +213,11 @@ Item {
                                 }
 
                                 Button {
-                                    width: 75
-                                    height: 38
+                                    width: 65
+                                    height: 34
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: modelData.status === "Processing" ? "Done" : "Reopen"
-                                    font.pixelSize: 12
+                                    font.pixelSize: 11
 
                                     background: Rectangle {
                                         gradient: Gradient {

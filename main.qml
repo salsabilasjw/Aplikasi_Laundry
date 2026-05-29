@@ -175,91 +175,37 @@ ApplicationWindow {
 
                     Row {
                         anchors.centerIn: parent
-                        spacing: 12  // gap-3
+                        spacing: 12
 
-                        // Logo dengan bubble effect
-                        Item {
-                            width: 48
-                            height: 48
 
-                            // Main circle (w-12 h-12)
-                            Rectangle {
-                                width: 48
-                                height: 48
-                                radius: 24
-                                gradient: Gradient {
-                                    GradientStop { position: 0; color: "#60A5FA" }  // from-blue-400
-                                    GradientStop { position: 1; color: "#2563EB" }  // to-blue-600
+                        Image {
+                                width: 68  // Ukuran dinaikkan dari 48 ke 68 agar lebih tegas
+                                height: 68
+                                source: "images/logo.png"
+                                fillMode: Image.PreserveAspectFit
+                                anchors.verticalCenter: parent.verticalCenter
                                 }
 
-                                // Shadow-lg
-                                layer.enabled: true
+                                Column {
+                                        spacing: 0
+                                        anchors.verticalCenter: parent.verticalCenter
 
-                                // Inner circle (w-8 h-8 bg-white/30)
-                                Rectangle {
-                                    anchors.centerIn: parent
-                                    width: 32
-                                    height: 32
-                                    radius: 16
-                                    color: "#FFFFFF"
-                                    opacity: 0.3
+                                        Text {
+                                            text: "BubblyWash"
+                                            font.pixelSize: 22  // text-xl
+                                            font.family: afacadFlux.name
+                                            font.bold: true
+                                            color: "#1E3A8A"  // text-blue-900
+                                            }
 
-                                    // Innermost circle (w-4 h-4 bg-white/40)
-                                    Rectangle {
-                                        anchors.centerIn: parent
-                                        width: 16
-                                        height: 16
-                                        radius: 8
-                                        color: "#FFFFFF"
-                                        opacity: 0.4
-                                    }
-                                }
-                            }
-
-                            // Top-right bubble (-top-1 -right-1 w-5 h-5)
-                            Rectangle {
-                                x: 28
-                                y: -4
-                                width: 20
-                                height: 20
-                                radius: 10
-                                color: "#93C5FD"  // blue-300
-                                opacity: 0.6
-                            }
-
-                            // Left bubble (top-2 -left-1 w-4 h-4)
-                            Rectangle {
-                                x: -4
-                                y: 8
-                                width: 16
-                                height: 16
-                                radius: 8
-                                color: "#BFDBFE"  // blue-200
-                                opacity: 0.4
-                            }
-                        }
-
-                        Column {
-                            spacing: 0
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            Text {
-                                text: "BubblyWash"
-                                font.pixelSize: 20  // text-xl
-                                font.family: afacadFlux.name
-                                font.bold: true
-                                color: "#1E3A8A"  // text-blue-900
-                            }
-
-                            Text {
-                                text: "Laundry Management"
-                                font.pixelSize: 12  // text-xs
-                                font.family: poppinsRegular.name
-                                color: "#1D4ED8"  // text-blue-700
-                            }
-                        }
-                    }
-                }
+                                            Text {
+                                            text: "Laundry Management"
+                                            font.pixelSize: 12  // text-xs
+                                            font.family: poppinsRegular.name
+                                            color: "#1D4ED8"  // text-blue-700
+                                            }
+                                        }
+                        }            }
 
                 // Navigation (flex-1 p-4)
                 Column {

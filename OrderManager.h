@@ -1,10 +1,10 @@
 #ifndef ORDERMANAGER_H
 #define ORDERMANAGER_H
 
+#include <QDateTime>
 #include <QObject>
 #include <QVariantList>
 #include <QVariantMap>
-#include <QDateTime>
 
 class OrderManager : public QObject
 {
@@ -22,7 +22,9 @@ public:
     int pendingOrders() const;
     double totalRevenue() const;
 
-    Q_INVOKABLE void addOrder(const QString &customerName, double weight, const QString &serviceType);
+    Q_INVOKABLE void addOrder(const QString &customerName,
+                              double weight,
+                              const QString &serviceType);
     Q_INVOKABLE void updateOrderStatus(const QString &orderId, const QString &status);
     Q_INVOKABLE QString formatRupiah(double amount) const;
 

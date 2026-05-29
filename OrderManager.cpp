@@ -1,14 +1,16 @@
 #include "OrderManager.h"
 
 OrderManager::OrderManager(QObject *parent)
-    : QObject(parent), m_orderCounter(0)
-{
-}
+    : QObject(parent)
+    , m_orderCounter(0)
+{}
 
 double OrderManager::getPricePerKg(const QString &serviceType) const
 {
-    if (serviceType == "Regular") return 10000.0;
-    if (serviceType == "Express") return 15000.0;
+    if (serviceType == "Regular")
+        return 10000.0;
+    if (serviceType == "Express")
+        return 15000.0;
     return 10000.0;
 }
 
@@ -52,7 +54,8 @@ int OrderManager::pendingOrders() const
     int count = 0;
     for (const QVariant &v : m_orders) {
         QVariantMap order = v.toMap();
-        if (order["status"].toString() == "Processing") count++;
+        if (order["status"].toString() == "Processing")
+            count++;
     }
     return count;
 }

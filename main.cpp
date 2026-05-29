@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("orderManager", &orderManager);
 
     // Load main QML
-    engine.load(QUrl(QStringLiteral("qrc:/qt/qml/Aplikasi_Laundry/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/BubblyWash/main.qml")));
 
     if (engine.rootObjects().isEmpty())
         return -1;

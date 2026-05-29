@@ -3,13 +3,14 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
+    id: receiptRoot
     property var order: null
     signal closeClicked()
 
     Column {
         anchors.fill: parent
         anchors.margins: 24
-        spacing: 16
+        spacing: 10
 
         // Close Button
         Button {
@@ -44,19 +45,17 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 12
 
-                Rectangle {
-                    width: 44
-                    height: 44
-                    radius: 22
-                    gradient: Gradient {
-                        GradientStop { position: 0; color: "#42A5F5" }
-                        GradientStop { position: 1; color: "#1E88E5" }
-                    }
+                Image {
+                    width: 80
+                    height: 80
+                    source: "images/logo.png"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 Text {
                     text: "BubblyWash"
-                    font.pixelSize: 26
+                    font.pixelSize: 28
                     font.bold: true
                     color: "#0D47A1"
                     anchors.verticalCenter: parent.verticalCenter
@@ -137,27 +136,24 @@ Item {
             border.color: "#81C784"
             border.width: 2
 
-            Row {
-                anchors.fill: parent
-                anchors.margins: 16
+            Text {
+                text: "Total Harga"
+                font.pixelSize: 17
+                font.bold: true
+                color: "#424242"
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-                Text {
-                    text: "Total Harga"
-                    font.pixelSize: 17
-                    font.bold: true
-                    color: "#424242"
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                Item { width: parent.width - 350 }
-
-                Text {
-                    text: order ? orderManager.formatRupiah(order.totalPrice) : ""
-                    font.pixelSize: 26
-                    font.bold: true
-                    color: "#388E3C"
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+            Text {
+                text: order ? orderManager.formatRupiah(order.totalPrice) : ""
+                font.pixelSize: 26
+                font.bold: true
+                color: "#388E3C"
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
 
@@ -234,8 +230,9 @@ Item {
                 console.log("Print receipt for order:", order.id);
             }
         }
-    }
+    } // Penutup Column Utama
 
+    // Component DetailRow diletakkan di level terluar (Root Level)
     component DetailRow: Rectangle {
         property string label: ""
         property string value: ""
@@ -245,7 +242,7 @@ Item {
         height: 42
         color: "transparent"
 
-        Row {
+        Item {
             anchors.fill: parent
             anchors.leftMargin: 4
             anchors.rightMargin: 4
@@ -255,9 +252,8 @@ Item {
                 font.pixelSize: 13
                 color: "#616161"
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
             }
-
-            Item { width: parent.width - 340 }
 
             Text {
                 text: value
@@ -268,6 +264,7 @@ Item {
                 elide: Text.ElideRight
                 width: 180
                 horizontalAlignment: Text.AlignRight
+                anchors.right: parent.right
             }
         }
 
@@ -279,4 +276,4 @@ Item {
             visible: !isLast
         }
     }
-}
+} // Penutup Item Root Utama
