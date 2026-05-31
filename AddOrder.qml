@@ -3,6 +3,12 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
+    property string afacadFlux: ""
+    property string poppinsRegular: ""
+    property string poppinsMedium: ""
+    property string poppinsSemiBold: ""
+    property string poppinsBold: ""
+
     Column {
         anchors.fill: parent
         anchors.margins: 20
@@ -18,6 +24,7 @@ Item {
                 font.pixelSize: 32
                 font.bold: true
                 color: "#212121"
+                font.family: afacadFlux
             }
 
             Text {
@@ -37,12 +44,12 @@ Item {
             border.width: 1
 
             Column {
-                    id: formContentColumn
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.margins: 20
-                    spacing: 14
+                id: formContentColumn
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.margins: 20
+                spacing: 14
 
                 // Customer Name
                 Column {
@@ -54,6 +61,7 @@ Item {
                         font.pixelSize: 13
                         font.bold: true
                         color: "#424242"
+                        font.family: poppinsRegular
                     }
 
                     TextField {
@@ -82,6 +90,7 @@ Item {
                         font.pixelSize: 13
                         font.bold: true
                         color: "#424242"
+                        font.family: poppinsBold
                     }
 
                     TextField {
@@ -111,6 +120,7 @@ Item {
                         font.pixelSize: 13
                         font.bold: true
                         color: "#424242"
+                        font.family: poppinsSemiBold
                     }
 
                     ComboBox {
@@ -129,18 +139,46 @@ Item {
                     }
                 }
 
+                // Sub Service Type
+                Column {
+                    width: parent.width
+                    spacing: 8
+
+                    Text {
+                        text: "Sub Service Type"
+                        font.pixelSize: 13
+                        font.bold: true
+                        color: "#424242"
+                        font.family: poppinsSemiBold
+                    }
+
+                    ComboBox {
+                        id: subServiceCombo
+                        width: parent.width
+                        height: 40
+                        model: orderManager.getSubServiceOptions()
+                        font.pixelSize: 14
+
+                        background: Rectangle {
+                            color: "#FFFFFF"
+                            border.color: parent.activeFocus ? "#1976D2" : "#BDBDBD"
+                            border.width: 2
+                            radius: 10
+                        }
+                    }
+                }
+
                 // Price Estimate
                 Rectangle {
                     id: priceEstimateBox
                     width: parent.width
-                    height: 72
+                    height: 90
                     color: "#E3F2FD"
                     border.color: "#90CAF9"
                     border.width: 1
                     radius: 12
 
                     Column {
-                        id: leftTextColumn
                         anchors.left: parent.left
                         anchors.leftMargin: 16
                         anchors.verticalCenter: parent.verticalCenter
@@ -154,23 +192,39 @@ Item {
                         }
 
                         Text {
-                            text: (weightField.text ? weightField.text : "0") + " kg × " +
-                                  (serviceTypeCombo.currentIndex === 0 ? "Rp 10.000/kg" : "Rp 15.000/kg")
+                            text: {
+                                var weight = weightField.text || "0";
+                                var pricePerKg = serviceTypeCombo.currentIndex === 0 ? 10000 : 15000;
+                                return weight + " kg × " + orderManager.formatRupiah(pricePerKg) + "/kg = " +
+                                       orderManager.formatRupiah(parseFloat(weight) * pricePerKg);
+                            }
                             font.pixelSize: 11
-                            color: "#616161"
+                            color: "#1976D2"
+                        }
+
+                        Text {
+                            text: {
+                                var subServicePrice = orderManager.getSubServicePrice(subServiceCombo.currentText);
+                                var subServiceName = subServiceCombo.currentText.split(" (+")[0];
+                                return subServiceName + " = +" + orderManager.formatRupiah(subServicePrice);
+                            }
+                            font.pixelSize: 11
+                            color: "#1976D2"
+                            visible: orderManager.getSubServicePrice(subServiceCombo.currentText) > 0
                         }
                     }
 
                     Text {
-                        property real pricePerKg: serviceTypeCombo.currentIndex === 0 ? 10000 : 15000
-                        property real totalPrice: (parseFloat(weightField.text) ? parseFloat(weightField.text) : 0) * pricePerKg
-
-                        text: "Rp " + totalPrice.toLocaleString(Qt.locale("id_ID"), "f", 0)
-
+                        text: {
+                            var weight = parseFloat(weightField.text) || 0;
+                            var pricePerKg = serviceTypeCombo.currentIndex === 0 ? 10000 : 15000;
+                            var subServicePrice = orderManager.getSubServicePrice(subServiceCombo.currentText);
+                            var total = (weight * pricePerKg) + subServicePrice;
+                            return orderManager.formatRupiah(total);
+                        }
                         font.pixelSize: 20
                         font.bold: true
                         color: "#1976D2"
-
                         anchors.right: parent.right
                         anchors.rightMargin: 16
                         anchors.verticalCenter: parent.verticalCenter
@@ -212,12 +266,20 @@ Item {
                         }
 
                         var serviceType = serviceTypeCombo.currentIndex === 0 ? "Regular" : "Express";
-                        orderManager.addOrder(customerNameField.text.trim(), weight, serviceType);
+                        var subService = subServiceCombo.currentText;
+
+                        orderManager.addOrder(
+                            customerNameField.text.trim(),
+                            weight,
+                            serviceType,
+                            subService
+                        );
 
                         // Clear form
                         customerNameField.text = "";
                         weightField.text = "";
                         serviceTypeCombo.currentIndex = 0;
+                        subServiceCombo.currentIndex = 0;
 
                         // Switch to order list
                         currentView = "orderList";

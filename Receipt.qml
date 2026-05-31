@@ -118,42 +118,106 @@ Item {
             spacing: 0
 
             DetailRow { label: "Nama Customer"; value: order ? order.customerName : "" }
-            DetailRow { label: "Berat"; value: order ? order.weight + " kg" : "" }
+            DetailRow { label: "Berat";         value: order ? order.weight + " kg" : "" }
             DetailRow { label: "Jenis Layanan"; value: order ? order.serviceType : "" }
+            DetailRow { label: "Sub Layanan";   value: order ? order.subService : "" }
             DetailRow {
                 label: "Harga per kg"
-                value: order ? orderManager.formatRupiah(order.totalPrice / order.weight) : ""
+                value: order ? orderManager.formatRupiah(order.serviceType === "Regular" ? 10000 : 15000) : ""
+            }
+            DetailRow {
+                label: "Biaya Sub Layanan"
+                value: order ? orderManager.formatRupiah(order.subServicePrice) : ""
+                visible: order && order.subServicePrice > 0
             }
             DetailRow { label: "Tanggal & Jam"; value: order ? order.createdAt : ""; isLast: true }
         }
 
-        // Total
+        // Total Breakdown
         Rectangle {
             width: parent.width
-            height: 75
+            height: 95
             color: "#C8E6C9"
             radius: 12
             border.color: "#81C784"
             border.width: 2
 
-            Text {
-                text: "Total Harga"
-                font.pixelSize: 17
-                font.bold: true
-                color: "#424242"
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Column {
+                anchors.fill: parent
+                anchors.margins: 14
+                spacing: 6
 
-            Text {
-                text: order ? orderManager.formatRupiah(order.totalPrice) : ""
-                font.pixelSize: 26
-                font.bold: true
-                color: "#388E3C"
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+                // Biaya Cuci
+                Row {
+                    width: parent.width
+
+                    Text {
+                        text: "Biaya Cuci (" + (order ? order.weight : 0) + " kg)"
+                        font.pixelSize: 12
+                        color: "#616161"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Item { width: parent.width - 300 }
+
+                    Text {
+                        text: order ? orderManager.formatRupiah(order.weight * (order.serviceType === "Regular" ? 10000 : 15000)) : ""
+                        font.pixelSize: 12
+                        color: "#424242"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+
+                // Biaya Sub Service (jika ada)
+                Row {
+                    width: parent.width
+                    visible: order && order.subServicePrice > 0
+
+                    Text {
+                        text: "Biaya " + (order ? order.subService : "")
+                        font.pixelSize: 12
+                        color: "#616161"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Item { width: parent.width - 300 }
+
+                    Text {
+                        text: order ? "+" + orderManager.formatRupiah(order.subServicePrice) : ""
+                        font.pixelSize: 12
+                        color: "#424242"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width
+                    height: 1
+                    color: "#81C784"
+                }
+
+                // Total
+                Row {
+                    width: parent.width
+
+                    Text {
+                        text: "Total Harga"
+                        font.pixelSize: 17
+                        font.bold: true
+                        color: "#424242"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Item { width: parent.width - 300 }
+
+                    Text {
+                        text: order ? orderManager.formatRupiah(order.totalPrice) : ""
+                        font.pixelSize: 26
+                        font.bold: true
+                        color: "#388E3C"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
             }
         }
 

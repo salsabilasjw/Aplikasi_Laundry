@@ -54,15 +54,16 @@ Item {
                         anchors.fill: parent
                         anchors.leftMargin: 24
                         anchors.rightMargin: 24
-                        spacing: 12
+                        spacing: 10
 
-                        HeaderText { text: "Order ID"; width: 75 }
-                        HeaderText { text: "Customer Name"; width: 140 }
-                        HeaderText { text: "Service Type"; width: 120 }
-                        HeaderText { text: "Weight (kg)"; width: 100 }
-                        HeaderText { text: "Total Price"; width: 120 }
-                        HeaderText { text: "Status"; width: 120 }
-                        HeaderText { text: "Actions"; width: 160 }
+                        HeaderText { text: "Order ID";    width: 80 }
+                        HeaderText { text: "Customer";    width: 130 }
+                        HeaderText { text: "Service";     width: 100 }
+                        HeaderText { text: "Sub Service"; width: 140 }
+                        HeaderText { text: "Weight";      width: 80 }
+                        HeaderText { text: "Total Price"; width: 110 }
+                        HeaderText { text: "Status";      width: 110 }
+                        HeaderText { text: "Actions";     width: 180 }
                     }
                 }
 
@@ -84,11 +85,11 @@ Item {
                             anchors.fill: parent
                             anchors.leftMargin: 24
                             anchors.rightMargin: 24
-                            spacing: 12
+                            spacing: 10
 
                             // Order ID
                             Text {
-                                width: 75
+                                width: 80
                                 text: "#" + modelData.id
                                 font.pixelSize: 13
                                 font.bold: true
@@ -100,7 +101,7 @@ Item {
 
                             // Customer Name
                             Text {
-                                width: 140
+                                width: 130
                                 text: modelData.customerName
                                 font.pixelSize: 13
                                 color: "#212121"
@@ -111,29 +112,40 @@ Item {
 
                             // Service Type
                             Row {
-                                width: 120
+                                width: 100
                                 height: parent.height
-                                spacing: 10
+                                spacing: 8
 
                                 Rectangle {
-                                    width: 10
-                                    height: 10
-                                    radius: 5
+                                    width: 8
+                                    height: 8
+                                    radius: 4
                                     color: modelData.serviceType === "Express" ? "#FFA000" : "#1976D2"
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
 
                                 Text {
                                     text: modelData.serviceType
-                                    font.pixelSize: 13
+                                    font.pixelSize: 12
                                     color: "#424242"
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
                             }
 
+                            // Sub Service
+                            Text {
+                                width: 140
+                                text: modelData.subService
+                                font.pixelSize: 11
+                                color: "#616161"
+                                verticalAlignment: Text.AlignVCenter
+                                height: parent.height
+                                elide: Text.ElideRight
+                            }
+
                             // Weight
                             Text {
-                                width: 100
+                                width: 80
                                 text: modelData.weight + " kg"
                                 font.pixelSize: 13
                                 color: "#424242"
@@ -143,9 +155,9 @@ Item {
 
                             // Total Price
                             Text {
-                                width: 120
+                                width: 110
                                 text: orderManager.formatRupiah(modelData.totalPrice)
-                                font.pixelSize: 13
+                                font.pixelSize: 12
                                 font.bold: true
                                 color: "#388E3C"
                                 verticalAlignment: Text.AlignVCenter
@@ -154,13 +166,13 @@ Item {
 
                             // Status
                             Item {
-                                width: 120
+                                width: 110
                                 height: parent.height
 
                                 Rectangle {
                                     width: modelData.status === "Processing" ? 95 : 80
                                     height: 28
-                                    anchors.centerIn: parent.left
+                                    anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
                                     color: modelData.status === "Processing" ? "#FFF9C4" : "#C8E6C9"
                                     border.color: modelData.status === "Processing" ? "#FFD54F" : "#A5D6A7"
@@ -179,16 +191,16 @@ Item {
 
                             // Actions
                             Row {
-                                width: 140
+                                width: 180
                                 height: parent.height
-                                spacing: 10
+                                spacing: 8
 
                                 Button {
                                     width: 65
                                     height: 34
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: "Struk"
-                                    font.pixelSize: 12
+                                    font.pixelSize: 11
 
                                     background: Rectangle {
                                         gradient: Gradient {
@@ -313,7 +325,7 @@ Item {
         id: receiptPopup
         anchors.centerIn: parent
         width: 480
-        height: 700
+        height: 750
         modal: true
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
