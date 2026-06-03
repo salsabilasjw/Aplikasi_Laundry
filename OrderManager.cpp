@@ -13,21 +13,20 @@ OrderManager::OrderManager(QObject *parent)
 void OrderManager::initializeSubServicePrices()
 {
     // Harga sub service sesuai dengan React app
-    m_subServicePrices["Cuci Biasa"]               = 0.0;
-    m_subServicePrices["Cuci + Lipat"]             = 5000.0;
-    m_subServicePrices["Cuci + Lipat + Setrika"]   = 10000.0;
-    m_subServicePrices["Cuci Bed Cover"]           = 5000.0;
-    m_subServicePrices["Karpet"]                   = 7000.0;
+    m_subServicePrices["Cuci Biasa"] = 0.0;
+    m_subServicePrices["Cuci + Lipat"] = 5000.0;
+    m_subServicePrices["Cuci + Lipat + Setrika"] = 10000.0;
+    m_subServicePrices["Cuci Bed Cover"] = 5000.0;
+    m_subServicePrices["Karpet"] = 7000.0;
 }
 
 QStringList OrderManager::getSubServiceOptions() const
 {
-    return QStringList()
-    << "Cuci Biasa (+Rp 0)"
-    << "Cuci + Lipat (+Rp 5.000)"
-    << "Cuci + Lipat + Setrika (+Rp 10.000)"
-    << "Cuci Bed Cover (+Rp 5.000)"
-    << "Karpet (+Rp 7.000)";
+    return QStringList() << "Cuci Biasa (+Rp 0)"
+                         << "Cuci + Lipat (+Rp 5.000)"
+                         << "Cuci + Lipat + Setrika (+Rp 10.000)"
+                         << "Cuci Bed Cover (+Rp 5.000)"
+                         << "Karpet (+Rp 7.000)";
 }
 
 double OrderManager::getPricePerKg(const QString &serviceType) const
@@ -74,7 +73,7 @@ void OrderManager::addOrder(const QString &customerName,
         subServiceName = subService.split(" (+").first();
 
     // Hitung harga
-    double pricePerKg     = getPricePerKg(serviceType);
+    double pricePerKg = getPricePerKg(serviceType);
     double subServicePrice = m_subServicePrices.value(subServiceName, 0.0);
 
     // Rumus: (berat × harga per kg) + harga sub layanan
@@ -82,21 +81,21 @@ void OrderManager::addOrder(const QString &customerName,
 
     // Buat order object sebagai QVariantMap
     QVariantMap order;
-    order["id"]              = orderId;
-    order["customerName"]    = customerName;
-    order["weight"]          = weight;
-    order["serviceType"]     = serviceType;
-    order["subService"]      = subServiceName;
+    order["id"] = orderId;
+    order["customerName"] = customerName;
+    order["weight"] = weight;
+    order["serviceType"] = serviceType;
+    order["subService"] = subServiceName;
     order["subServicePrice"] = subServicePrice;
-    order["totalPrice"]      = totalPrice;
-    order["status"]          = "Processing"; // Default status
-    order["createdAt"]       = formatDateTime(QDateTime::currentDateTime());
+    order["totalPrice"] = totalPrice;
+    order["status"] = "Processing"; // Default status
+    order["createdAt"] = formatDateTime(QDateTime::currentDateTime());
 
     // Tambahkan ke list orders
     m_orders.append(order);
 
     // Emit signals
-    emit ordersChanged();              // Notify QML bahwa orders berubah
+    emit ordersChanged();                         // Notify QML bahwa orders berubah
     emit orderAdded("Order added successfully!"); // Trigger toast notification
 }
 

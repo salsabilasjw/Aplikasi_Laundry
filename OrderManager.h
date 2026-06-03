@@ -44,8 +44,8 @@ signals:
     void orderAdded(const QString &message); // Untuk toast notification
 
 private:
-    QVariantList m_orders;   // List semua order
-    int m_orderCounter;      // Counter untuk generate ID order
+    QVariantList m_orders; // List semua order
+    int m_orderCounter;    // Counter untuk generate ID order
 
     // Helper functions
     double getPricePerKg(const QString &serviceType) const;

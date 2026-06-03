@@ -54,16 +54,16 @@ Item {
                         anchors.fill: parent
                         anchors.leftMargin: 24
                         anchors.rightMargin: 24
-                        spacing: 10
+                        spacing: 15
 
-                        HeaderText { text: "Order ID";    width: 80 }
-                        HeaderText { text: "Customer";    width: 130 }
-                        HeaderText { text: "Service";     width: 100 }
-                        HeaderText { text: "Sub Service"; width: 140 }
-                        HeaderText { text: "Weight";      width: 80 }
-                        HeaderText { text: "Total Price"; width: 110 }
-                        HeaderText { text: "Status";      width: 110 }
-                        HeaderText { text: "Actions";     width: 180 }
+                        HeaderText { text: "Order ID"; width: 90 }
+                        HeaderText { text: "Customer"; width: 160 }
+                        HeaderText { text: "Service"; width: 120 }
+                        HeaderText { text: "Sub Service"; width: 170 }
+                        HeaderText { text: "Weight"; width: 90 }
+                        HeaderText { text: "Total Price"; width: 140 }
+                        HeaderText { text: "Status"; width: 130 }
+                        HeaderText { text: "Actions"; width: 220 }
                     }
                 }
 
@@ -85,11 +85,11 @@ Item {
                             anchors.fill: parent
                             anchors.leftMargin: 24
                             anchors.rightMargin: 24
-                            spacing: 10
+                            spacing: 15
 
                             // Order ID
                             Text {
-                                width: 80
+                                width: 90
                                 text: "#" + modelData.id
                                 font.pixelSize: 13
                                 font.bold: true
@@ -101,7 +101,7 @@ Item {
 
                             // Customer Name
                             Text {
-                                width: 130
+                                width: 160
                                 text: modelData.customerName
                                 font.pixelSize: 13
                                 color: "#212121"
@@ -112,9 +112,9 @@ Item {
 
                             // Service Type
                             Row {
-                                width: 100
+                                width: 120
                                 height: parent.height
-                                spacing: 8
+                                spacing: 10
 
                                 Rectangle {
                                     width: 8
@@ -134,7 +134,7 @@ Item {
 
                             // Sub Service
                             Text {
-                                width: 140
+                                width: 170
                                 text: modelData.subService
                                 font.pixelSize: 11
                                 color: "#616161"
@@ -145,7 +145,7 @@ Item {
 
                             // Weight
                             Text {
-                                width: 80
+                                width: 90
                                 text: modelData.weight + " kg"
                                 font.pixelSize: 13
                                 color: "#424242"
@@ -155,7 +155,7 @@ Item {
 
                             // Total Price
                             Text {
-                                width: 110
+                                width: 140
                                 text: orderManager.formatRupiah(modelData.totalPrice)
                                 font.pixelSize: 12
                                 font.bold: true
@@ -166,7 +166,7 @@ Item {
 
                             // Status
                             Item {
-                                width: 110
+                                width: 130
                                 height: parent.height
 
                                 Rectangle {
@@ -191,7 +191,7 @@ Item {
 
                             // Actions
                             Row {
-                                width: 180
+                                width: 220
                                 height: parent.height
                                 spacing: 8
 

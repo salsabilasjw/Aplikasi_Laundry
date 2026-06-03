@@ -10,7 +10,7 @@ Item {
     Column {
         anchors.fill: parent
         anchors.margins: 24
-        spacing: 10
+        spacing: 7
 
         // Close Button
         Button {
@@ -201,7 +201,7 @@ Item {
                     width: parent.width
 
                     Text {
-                        text: "Total Harga"
+                        text: "Total Harga "
                         font.pixelSize: 17
                         font.bold: true
                         color: "#424242"
@@ -211,8 +211,8 @@ Item {
                     Item { width: parent.width - 300 }
 
                     Text {
-                        text: order ? orderManager.formatRupiah(order.totalPrice) : ""
-                        font.pixelSize: 26
+                        text: order ? orderManager.formatRupiah(order.totalPrice) : "."
+                        font.pixelSize: 17
                         font.bold: true
                         color: "#388E3C"
                         anchors.verticalCenter: parent.verticalCenter
@@ -243,7 +243,7 @@ Item {
         // Footer
         Column {
             width: parent.width
-            spacing: 6
+            spacing: 0
 
             Rectangle {
                 width: parent.width
